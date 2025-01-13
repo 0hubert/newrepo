@@ -59,7 +59,16 @@ gravatar = Gravatar(app,
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
+# Modify the database configuration
+if os.getenv('DATABASE_URL', '').startswith('postgres://'):
+    # Handle Render.com's postgres:// URL format
+    DATABASE_URL = os.getenv('DATABASE_URL').replace('postgres://', 'postgresql://')
+else:
+    # Use SQLite as fallback
+    DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///posts.db')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
