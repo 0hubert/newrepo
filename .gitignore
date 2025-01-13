@@ -168,3 +168,14 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# SQLite database
+*.db
+
+# Operating System
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
